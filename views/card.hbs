@@ -1,9 +1,13 @@
-<h1>Shoplist</h1>
+    <p>{{card.equips}}</p>
+<h1 style="text-align: center;">Shoplist</h1>
+<div id="card">
 
-<table>
+{{#if equips.length}}
+    <table style="font-family: cursive;">
     <thead>
-        <tr>
+        <tr style="font-size: 30px;">
             <th>Title</th>
+            <th>Count</th>
             <th>Price</th>
             <th>Action</th>
         </tr>
@@ -11,15 +15,22 @@
     <tbody>
         {{#each equips}}
         <tr>
-            <td>{{title}}</td>
-            <td>{{price}}</td>
+            <td style="font-family: Verdana; font-weight: 700;">{{title}}</td>
+            <td style="font-weight: 600; font-size: 20px; text-align: center;">{{count}}</td>
+            <td style="font-weight: 600; font-size: 20px;" class="price">{{price}}</td>
             <td>
-                <form action="/card/delete">
-                <input type="hidden" name="id" value="{{id}}">
-                <button class="btn btn-small" type="submit">Cancel</button>
-                </form>
+                <button class="btn btn-small js-remove" data-id="{{id}}" type="submit">Cancel</button>
             </td>
         </tr>
         {{/each}}
     </tbody>
 </table>
+
+<div class="text-center">
+    <p class="price" id="total-price" style="font-weight: 700; font-size: 30px; font-family: cursive;">{{price}}</p>
+</div>
+{{else}}
+<p style="font-size: 30px; font-family: Impact;text-align: center;">Shoplist is empty!!!</p>
+{{/if}}
+
+</div>

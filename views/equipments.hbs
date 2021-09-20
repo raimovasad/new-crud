@@ -14,12 +14,12 @@
           <span class="card-title" style="font-weight: 500; font-size: 30px;">{{title}}</span>
           <p style="font-weight: 700; font-size: 20px;" class="price">{{price}}</p>
         </div>
-        <div class="card-action">
+        <div class="card-action" style="display: flex;justify-content: space-between;align-items: center;">
           <a href="/equip/{{id}}" target="_blank">Show Gloves</a>
           <a href="/equip/edit/{{id}}">Edit Gloves</a>
-          <form action="/card/add">
+          <form action="/card/add" method="POST">
             <input type="hidden" name="id" value="{{id}}">
-            <button type="submit">BUY</button>
+            <button type="submit" class="btn btn-primary">BUY</button>
           </form>
         </div>
       </div>
