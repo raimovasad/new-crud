@@ -1,0 +1,28 @@
+  <nav class="blue-grey darken-2">
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo">Buka Boxing</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+
+        {{#if isHome}}
+        <li class="active"><a href="/">Main</a></li>
+        {{else}}
+        <li><a href="/">Main</a></li>
+      {{/if}}
+      {{#if isEquip}}
+        <li class="active"><a href="/equip">Equipments</a></li>
+        {{else}}
+        <li><a href="/equip">Equipments</a></li>
+        {{/if}}
+        {{#if isAdd}}
+        <li class="active"><a href="/add">Add equipment</a></li>
+        {{else}}
+        <li><a href="/add">Add equipment</a></li>
+          {{/if}}
+        {{#if isCard}}
+        <li class="active"><a href="/card">Shoplist</a></li>
+        {{else}}
+        <li><a href="/card">Shoplist</a></li>
+          {{/if}}
+      </ul>
+    </div>
+  </nav>
