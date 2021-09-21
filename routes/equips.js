@@ -5,7 +5,7 @@ const Equipment = require('../models/Equipment')
 
 
 router.get('/',async(req,res)=>{
-const equips = await Equipment.getAll()
+const equips = await Equipment.find()
 
     res.render('equipments',{
         title:'Equipments',
@@ -15,7 +15,7 @@ const equips = await Equipment.getAll()
 })
 
 router.get('/:id',async(req,res)=>{
-    const equip = await Equipment.getById(req.params.id)
+    const equip = await Equipment.findById(req.params.id)
     res.render('equip',{
         title: `${equip.title}`,
         equip,
@@ -25,7 +25,7 @@ router.get('/:id',async(req,res)=>{
 
 
 router.get('/edit/:id',async(req,res)=>{
-    const equips = await Equipment.getAll()
+    const equips = await Equipment.find()
     const equip = equips.find(c=> c.id.toString() === req.params.id.toString())
     res.render('edit-equip',{
         title: `Edit ${equip.title}`,

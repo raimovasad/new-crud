@@ -7,12 +7,18 @@ const homeRouter = require('./routes/home')
 const addRouter = require('./routes/add')
 const equipRouter = require('./routes/equips')
 const cardRouter =require('./routes/card')
+const mongoose = require('mongoose')
+
 
 
 const hbs = exhbs.create({
     defaultLayout:'main',
     extname: 'hbs',
-    partialsDir: 'views/partials'
+    partialsDir: 'views/partials',
+    runtimeOptions: {
+        allowProtoPropertiesByDefault: true,
+        allowProtoByDefault: true
+    }
 })
 
 app.engine('hbs',hbs.engine)
@@ -39,13 +45,28 @@ app.use('/card',cardRouter)
 
 
 
+async function start(){
+    try{
+
+        const MONGODB_URI = 'mongodb+srv://asad:b7q3JjGQzDpIfTfu@cluster0.l1arz.mongodb.net/buka'
+        await mongoose.connect(MONGODB_URI, async(err)=>{
+            if(err) throw new Error(err)
+             console.log('Connected to mangoDB');
+            const PORT = process.env.PORT || 3300
+            app.listen(PORT,()=>{
+                console.log(`Express is running on ${PORT}`);
+            })
+            
+        })
+    }
+    catch(e){
+        console.log(e);
+    }
+}
+
+start()
 
 
 
 
 
-
-const PORT = process.env.PORT || 3300
-app.listen(PORT,()=>{
-    console.log(`Express is running on ${PORT}`);
-})

@@ -11,11 +11,19 @@ router.get('/',(req,res)=>{
 
 router.post('/',async(req,res)=>{
     const {title,price,image} = req.body
-    const equip = new Equipment(title,price,image)
-
-   await equip.save()
+    const equip = new Equipment ({
+        title,
+        price,
+        image
+    })
+    try{
+        await equip.save()
+        res.redirect('/equip')
+    }
+    catch(er){
+        console.log(er);
+    }
     
-    res.redirect('/equip')
 })
 
 
