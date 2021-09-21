@@ -6,7 +6,9 @@ const Equipment = require('../models/Equipment')
 
 router.get('/',async(req,res)=>{
 const equips = await Equipment.find()
-
+.populate('userId','name email')
+.select('title image price')
+        console.log(equips);
     res.render('equipments',{
         title:'Equipments',
         isEquip: true,
@@ -32,10 +34,24 @@ router.get('/edit/:id',async(req,res)=>{
         equip
     })
 })
+
+    router.post('/remove',async(req,res)=>{
+        try{
+            await Equipment.deleteOne({
+                _id: req.body.id
+            })
+            res.redirect('/equip')
+        }
+        catch(e){
+            console.log(e);
+        }
+    })
+
 router.post('/edit',async(req,res)=>{
   
-    const equip =  req.body
-    await Equipment.update(equip)
+    const {id}= req.body
+
+    await Equipment.findByIdAndUpdate(id,req.body)
     res.redirect('/equip')
     
 })

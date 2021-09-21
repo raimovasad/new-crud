@@ -1,32 +1,51 @@
 const {Router} = require('express')
-const Card = require('../models/Card')
 const Equipment = require('../models/Equipment')
 
 const router = Router()
 
+function mapCartItems (cart){
+    return cart.items.map(c=>({
+        ...c.equipId._doc, count: c.count
+    }))
+
+}
+
+function totalPrice(equips) { 
+    return equips.reduce((total, c)=>{
+        return total += c.count * c.price
+    },0)
+ }
+
 router.get('/',async(req,res)=>{
-        const {equips,price} = await Card.fetch()
-    
+    const user = await req.user.populate('cart.items.equipId')
+   
+    const equips = mapCartItems(user.cart)
+    console.log(equips);
     res.render('card',{
         title: 'Shoplist',
+        price:totalPrice(equips),
         equips,
-        price,
         isCard: true
     })
 })
 
 router.post('/add',async(req,res)=>{
-    const equip = await Equipment.getById(req.body.id)
-    await Card.add(equip)
+    const equip = await Equipment.findById(req.body.id)
+   await req.user.addToCart(equip)
     res.redirect('/card')
 })
 
 router.delete('/remove/:id',async(req,res)=>{
-    
-   const card = await Card.remove(req.params.id)
-    res.status(200).json(card)
-})
+    await req.user.removeFromCart(req.params.id)
+    const user =await req.user.populate('cart.items.equipId')
+    const equips = mapCartItems(user.cart)
+    const cart = {
+        equips,
+        price: totalPrice(equips)
+    }
+    res.status(200).json(cart) 
+}) 
 
-
+ 
  
 module.exports = router

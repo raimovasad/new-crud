@@ -14,8 +14,13 @@ const equipSchema = new Schema({
     image: {
         type: String,
         required: true
+    },
+    userId: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: 'User'
     }
 
 })
 
-module.exports = model('Equipment',equipSchema)
+module.exports = model('Equipment',equipSchema) 

@@ -16,9 +16,9 @@ if($card){
             fetch('/card/remove/'+id,{
                 method:'delete'
             }).then(data=> data.json())
-            .then(card=>{
-               if(card.equips.length){
-                const html = card.equips.map(c=>{
+            .then(cart=>{
+               if(cart.equips.length){
+                const html = cart.equips.map(c=>{
                     return `  <tr>
                     <td style="font-family: Verdana; font-weight: 700;">${c.title}</td>
                     <td style="font-weight: 600; font-size: 20px; text-align: center;">${c.count}</td>
@@ -30,7 +30,7 @@ if($card){
                 }).join('')
 
 
-                $card.querySelector('#total-price').textContent = card.price
+                $card.querySelector('#total-price').textContent = cart.price
                 $card.querySelector('tbody').innerHTML = html
                  $card.querySelectorAll('.price').forEach(c=> toCurrency(c))
                }

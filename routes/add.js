@@ -14,7 +14,8 @@ router.post('/',async(req,res)=>{
     const equip = new Equipment ({
         title,
         price,
-        image
+        image,
+        userId: req.user
     })
     try{
         await equip.save()
