@@ -2,7 +2,7 @@ function toCurrency(price){
     price.textContent = new Intl.NumberFormat('en-EN',{
         currency: 'usd',
         style: 'currency'
-    }).format(price.innerText)
+    }).format(price.innerHTML)
 }
 
 document.querySelectorAll('.price').forEach(c => toCurrency(c))
@@ -52,4 +52,9 @@ if($card){
 document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.collapsible');
     var instances = M.Collapsible.init(elems, {});
+  });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.carousel');
+    var instances = M.Carousel.init(elems, {});
   });

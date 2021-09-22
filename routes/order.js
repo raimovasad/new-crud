@@ -14,7 +14,6 @@ router.get('/',async(req,res)=>{
     const orders = await Order.find({
         'user.userId': req.user._id
     }).populate('user.userId')
-    console.log(orders[3].equips);
     res.render('order',{
         title: 'Order page',
         isOrder: true,
@@ -22,7 +21,7 @@ router.get('/',async(req,res)=>{
             return {
                 ...x._doc,
                 price: x.equips.reduce((total,c)=>{
-                    total += c.price * c.count
+                   return total += c.equip.price * c.count
                 },0)
             }
             })
