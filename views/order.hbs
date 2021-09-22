@@ -1,0 +1,33 @@
+<h1>Order page</h1>
+
+
+
+      <div class="row">
+           <div class="col s8 offset-s2">
+        {{#if orders.length}}
+     <ul class="collapsible">
+       {{#each orders}}
+            <li>
+             <div class="collapsible-header" ><i class="material-icons">star</i><span>Order № {{_id}} </span></div>
+             <div class="collapsible-body">
+                 <p>User name: <strong>{{user.name}}</strong></p>
+                 <p>User email: <strong>{{user.email}}</strong></p>
+                 <div class="equips">
+                     <ul class="equips_list">
+                         {{#each equips}}
+                        <li class="equips_item" style="font-size: 20px;">
+                            <span class="equip_title">{{equip.title}}</span>
+                            <span class="equip_count"><strong> x {{count}}</strong></span>
+                            </li>
+                         {{/each}}
+                     </ul>
+                 </div>
+             </div>
+             </li>
+       {{/each}}
+    </ul>
+        {{/if}}
+       </div>
+      </div>
+
+

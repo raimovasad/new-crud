@@ -19,12 +19,13 @@ if($card){
             .then(cart=>{
                if(cart.equips.length){
                 const html = cart.equips.map(c=>{
+                    console.log(c);
                     return `  <tr>
                     <td style="font-family: Verdana; font-weight: 700;">${c.title}</td>
                     <td style="font-weight: 600; font-size: 20px; text-align: center;">${c.count}</td>
                     <td style="font-weight: 600; font-size: 20px;" class="price">${c.price}</td>
                     <td>
-                        <button class="btn btn-small js-remove" data-id="${c.id}" type="submit">Cancel</button>
+                        <button class="btn btn-small js-remove" data-id="${c._id}" type="submit">Cancel</button>
                     </td>
                 </tr>`
                 }).join('')
@@ -45,3 +46,10 @@ if($card){
 
     })
 }
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.collapsible');
+    var instances = M.Collapsible.init(elems, {});
+  });

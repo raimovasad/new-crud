@@ -29,6 +29,10 @@
 <div class="text-center">
     <p class="price" id="total-price" style="font-weight: 700; font-size: 30px; font-family: cursive;">{{price}}</p>
 </div>
+
+<form action="/order"method="POST">
+<button type="submit" class="btn">Make order</button>
+</form>
 {{else}}
 <p style="font-size: 30px; font-family: Impact;text-align: center;">Shoplist is empty!!!</p>
 {{/if}}

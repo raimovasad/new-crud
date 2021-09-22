@@ -55,7 +55,7 @@ const {model,Schema} = require('mongoose')
      let items = this.cart.items.concat()
      const idx = items.findIndex(c=> c.equipId.toString() === id.toString())
      const candidate = items[idx]
-     if(candidate.count == 1){
+     if(items[idx].count == 1){
         items = items.filter(c=> c.equipId.toString() !== id.toString())
      }
      else{
@@ -67,6 +67,10 @@ const {model,Schema} = require('mongoose')
 
  }
 
+ userSchema.methods.clearCart = function(){
+    this.cart  = {items:[]} 
+    return this.save()
+ }
 
 
  module.exports = model('User', userSchema)

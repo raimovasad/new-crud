@@ -20,7 +20,6 @@ router.get('/',async(req,res)=>{
     const user = await req.user.populate('cart.items.equipId')
    
     const equips = mapCartItems(user.cart)
-    console.log(equips);
     res.render('card',{
         title: 'Shoplist',
         price:totalPrice(equips),
@@ -30,7 +29,14 @@ router.get('/',async(req,res)=>{
 })
 
 router.post('/add',async(req,res)=>{
-    const equip = await Equipment.findById(req.body.id)
+    const {_id,title,price,image,userId} = await Equipment.findById(req.body.id)
+    const equip = {
+        _id,
+        title,
+        price,
+        image,
+        userId
+    }
    await req.user.addToCart(equip)
     res.redirect('/card')
 })

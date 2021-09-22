@@ -7,6 +7,7 @@ const homeRouter = require('./routes/home')
 const addRouter = require('./routes/add')
 const equipRouter = require('./routes/equips')
 const cardRouter =require('./routes/card')
+const orderRouter = require('./routes/order')
 const mongoose = require('mongoose')
 
 
@@ -20,6 +21,7 @@ const hbs = exhbs.create({
         allowProtoByDefault: true
     }
 })
+
 
 app.engine('hbs',hbs.engine)
 app.set('view engine','hbs')
@@ -36,6 +38,7 @@ app.use(async(req,res,next)=>{
    }
 })
 
+
 app.use(express.static(path.join(__dirname,'public')))
 app.use(express.urlencoded({extended: true}))
 
@@ -43,6 +46,7 @@ app.use('/',homeRouter)
 app.use('/add',addRouter)
 app.use('/equip',equipRouter)
 app.use('/card',cardRouter)
+app.use('/order',orderRouter)
 
 
 
