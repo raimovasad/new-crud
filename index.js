@@ -8,6 +8,7 @@ const addRouter = require('./routes/add')
 const equipRouter = require('./routes/equips')
 const cardRouter =require('./routes/card')
 const orderRouter = require('./routes/order')
+const authRouter = require('./routes/auth')
 const mongoose = require('mongoose')
 
 
@@ -47,6 +48,7 @@ app.use('/add',addRouter)
 app.use('/equip',equipRouter)
 app.use('/card',cardRouter)
 app.use('/order',orderRouter)
+app.use('/auth',authRouter)
 
 
 
