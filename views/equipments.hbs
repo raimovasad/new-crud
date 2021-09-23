@@ -10,7 +10,7 @@
   <div class="carousel">
     {{#each equips}}
     <div class="carousel-item" >
-      <div class="card" style="position: relative; color: #fff;">
+      <div class="card" style="position: relative; color: #fff; overflow: hidden;">
         <div class="card-image">
           <img src="{{image}}">
         </div>
@@ -21,11 +21,13 @@
         </div>
         <div class="card-action" style="display: flex;justify-content: space-between;align-items: center;">
           <a href="/equip/{{_id}}" target="_blank">Show Equipment</a>
-          <a href="/equip/edit/{{_id}}">Edit Equipment</a>
-          <form action="/card/add" method="POST">
+     {{#if @root.isAuth}}
+           <a href="/equip/edit/{{_id}}">Edit Equipment</a> 
+            <form action="/card/add" method="POST">
             <input type="hidden" name="id" value="{{_id}}">
             <button type="submit" class="btn btn-primary">BUY</button>
           </form>
+      {{/if}}
         </div>
         </div>
       </div>

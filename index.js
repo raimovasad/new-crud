@@ -2,15 +2,31 @@ const express =require('express')
 const app = express()
 const path = require('path')
 const exhbs = require('express-handlebars')
+const mongoose = require('mongoose')
+const session = require('express-session')
 const User = require('./models/user')
+const MongoStore = require('connect-mongodb-session')(session)
+const MONGODB_URI = 'mongodb+srv://asad:b7q3JjGQzDpIfTfu@cluster0.l1arz.mongodb.net/buka'
+
+// middlewares
+const varMiddleware = require('./middleware/variables')
+const userMiddleware = require('./middleware/user')
+
+// routes
 const homeRouter = require('./routes/home')
 const addRouter = require('./routes/add')
 const equipRouter = require('./routes/equips')
 const cardRouter =require('./routes/card')
 const orderRouter = require('./routes/order')
 const authRouter = require('./routes/auth')
-const mongoose = require('mongoose')
 
+
+
+
+const store = new MongoStore({
+    collection: 'sessions-asad',
+    uri:MONGODB_URI
+})
 
 
 const hbs = exhbs.create({
@@ -28,20 +44,19 @@ app.engine('hbs',hbs.engine)
 app.set('view engine','hbs')
 app.set('views', path.join(__dirname,'views'))
 
-app.use(async(req,res,next)=>{
-  try{ 
-    const user =await User.findById('6149c5745aa00ef5db64e008')
-    req.user = user
-    next()
-}
-   catch(e){
-       console.log(e);
-   }
-})
+
 
 
 app.use(express.static(path.join(__dirname,'public')))
 app.use(express.urlencoded({extended: true}))
+app.use(session({
+    secret: 'some secret word',
+    resave: false,
+    saveUninitialized: false,
+    store
+}))
+app.use(varMiddleware)
+app.use(userMiddleware)
 
 app.use('/',homeRouter)
 app.use('/add',addRouter)
@@ -65,19 +80,10 @@ app.use('/auth',authRouter)
 async function start(){
     try{
 
-        const MONGODB_URI = 'mongodb+srv://asad:b7q3JjGQzDpIfTfu@cluster0.l1arz.mongodb.net/buka'
         await mongoose.connect(MONGODB_URI, async(err)=>{
             if(err) throw new Error(err)
              console.log('Connected to mangoDB');
-             const candidate = await User.findOne()
-             if(!candidate){
-                 const user = new User({
-                     email: 'asad@mail.ru',
-                     name: 'Asadbek',
-                     cart: {items:[]}
-                 })
-                 await user.save()
-             }
+           
             const PORT = process.env.PORT || 3300
             app.listen(PORT,()=>{
                 console.log(`Express is running on ${PORT}`);

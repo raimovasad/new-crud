@@ -4,6 +4,20 @@ function toCurrency(price){
         style: 'currency'
     }).format(price.innerHTML)
 }
+function toDate(date) {
+    return new Intl.DateTimeFormat('en-En',{
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+    }).format(new Date(date))
+  }
+
+
+document.querySelectorAll('.date-order').forEach(c=>{
+    c.textContent = toDate(c.textContent)
+})
 
 document.querySelectorAll('.price').forEach(c => toCurrency(c))
 

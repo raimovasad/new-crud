@@ -13,7 +13,9 @@
         {{else}}
         <li><a href="/equip">Equipments</a></li>
         {{/if}}
-        {{#if isAdd}}
+   {{#if isAuth}} {{!-- is auth --}}
+
+            {{#if isAdd}}
         <li class="active"><a href="/add">Add equipment</a></li>
         {{else}}
         <li><a href="/add">Add equipment</a></li>
@@ -28,11 +30,18 @@
         {{else}}
         <li><a href="/order">Orders</a></li>
           {{/if}}
-        {{#if isLogin}}
+        <li><a href="/auth/logout">Logout</a></li>
+
+    {{else}} {{!-- is auth --}}
+          
+          {{#if isLogin}}
         <li class="active"><a href="/auth/login#login">Sign in</a></li>
         {{else}}
         <li><a href="/auth/login#login">Sign in</a></li>
           {{/if}}
+
+    {{/if}}     {{!-- is auth --}}
+        
       </ul>
     </div>
   </nav>

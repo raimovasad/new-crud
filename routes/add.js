@@ -1,21 +1,24 @@
 const {Router} = require('express')
 const Equipment = require('../models/Equipment')
 const router = Router()
+const auth = require('../middleware/auth')
 
-router.get('/',(req,res)=>{
+
+
+router.get('/',auth,(req,res)=>{
     res.render('add-equip',{
         title:'Add new Equipment',
         isAdd: true
     })
 })
 
-router.post('/',async(req,res)=>{
+router.post('/',auth,async(req,res)=>{
     const {title,price,image} = req.body
     const equip = new Equipment ({
         title,
         price,
         image,
-        userId: req.user
+        userId: req.session.user
     })
     try{
         await equip.save()

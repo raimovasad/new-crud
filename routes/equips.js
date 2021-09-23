@@ -1,10 +1,12 @@
 const {Router} = require('express')
 const router = Router()
 const Equipment = require('../models/Equipment')
+const auth = require('../middleware/auth')
 
 
 
 router.get('/',async(req,res)=>{
+
 const equips = await Equipment.find()
 .populate('userId','name email')
 .select('title image price')
@@ -25,7 +27,7 @@ router.get('/:id',async(req,res)=>{
 })
 
 
-router.get('/edit/:id',async(req,res)=>{
+router.get('/edit/:id',auth,async(req,res)=>{
     const equips = await Equipment.find()
     const equip = equips.find(c=> c.id.toString() === req.params.id.toString())
     res.render('edit-equip',{
@@ -34,7 +36,7 @@ router.get('/edit/:id',async(req,res)=>{
     })
 })
 
-    router.post('/remove',async(req,res)=>{
+    router.post('/remove',auth,async(req,res)=>{
         try{
             await Equipment.deleteOne({
                 _id: req.body.id
@@ -46,7 +48,7 @@ router.get('/edit/:id',async(req,res)=>{
         }
     })
 
-router.post('/edit',async(req,res)=>{
+router.post('/edit',auth,async(req,res)=>{
   
     const {id}= req.body
 

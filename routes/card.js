@@ -1,7 +1,8 @@
 const {Router} = require('express')
 const Equipment = require('../models/Equipment')
+const router = Router() 
+const auth = require('../middleware/auth')
 
-const router = Router()
 
 function mapCartItems (cart){
     return cart.items.map(c=>({
@@ -16,7 +17,8 @@ function totalPrice(equips) {
     },0)
  }
 
-router.get('/',async(req,res)=>{
+router.get('/',auth,async(req,res)=>{
+
     const user = await req.user.populate('cart.items.equipId')
    
     const equips = mapCartItems(user.cart)
@@ -28,7 +30,7 @@ router.get('/',async(req,res)=>{
     })
 })
 
-router.post('/add',async(req,res)=>{
+router.post('/add',auth,async(req,res)=>{
     const {_id,title,price,image,userId} = await Equipment.findById(req.body.id)
     const equip = {
         _id,
@@ -41,7 +43,7 @@ router.post('/add',async(req,res)=>{
     res.redirect('/card')
 })
 
-router.delete('/remove/:id',async(req,res)=>{
+router.delete('/remove/:id',auth,async(req,res)=>{
     await req.user.removeFromCart(req.params.id)
     const user =await req.user.populate('cart.items.equipId')
     const equips = mapCartItems(user.cart)
