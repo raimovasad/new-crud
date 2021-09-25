@@ -39,7 +39,6 @@ router.post('/',auth,async(req,res)=>{
             userId: user._id
         }
     })
-    console.log(order.equips[0].equip);
     await req.user.clearCart()
     await order.save()
 

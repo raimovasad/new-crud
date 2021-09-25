@@ -5,6 +5,6 @@ module.exports = async function (req,res,next) {
         return next()
     }
 
-    req.user = await User.findOne(req.session.user._id)
+    req.user = await User.findOne({_id:req.session.user._id})
      return next()
   }
